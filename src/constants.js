@@ -17,6 +17,9 @@ export const CHANNELS = {
     mastodon: 'Mastodon (SOON)',
     reddit: 'Reddit (SOON)',
     discord: 'Discord (SOON)',
+    ghost: 'Ghost (SOON)',
+    wordpress: 'Wordpress (SOON)',
+    steemit: 'Steemit (SOON)',
 };
 
 export const VIEW_TYPE_REVIEW = 'review';
