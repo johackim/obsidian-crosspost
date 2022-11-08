@@ -17,13 +17,6 @@ export default class NewsletterPlugin extends Plugin {
 
         this.registerView(VIEW_TYPE_REVIEW, (leaf) => new ReviewView(leaf, this));
 
-        if (!this.app.workspace.getLeavesOfType(VIEW_TYPE_REVIEW).length) {
-            this.app.workspace.getRightLeaf(false).setViewState({
-                type: VIEW_TYPE_REVIEW,
-                active: true,
-            });
-        }
-
         this.addCommand({
             id: 'publish-content',
             name: 'Publish a new content',
@@ -31,6 +24,21 @@ export default class NewsletterPlugin extends Plugin {
                 new PublishModal(this.app, this).open();
             },
         });
+
+        if (this.app.workspace.layoutReady) {
+            this.initLeaf();
+        } else {
+            this.registerEvent(this.app.workspace.on('layout-ready', this.initLeaf.bind(this)));
+        }
+    }
+
+    initLeaf() {
+        if (!this.app.workspace.getLeavesOfType(VIEW_TYPE_REVIEW).length) {
+            this.app.workspace.getRightLeaf(false).setViewState({
+                type: VIEW_TYPE_REVIEW,
+                active: true,
+            });
+        }
     }
 
     async loadSettings() {

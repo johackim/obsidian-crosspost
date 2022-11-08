@@ -30,7 +30,7 @@ export default class ReviewView extends ItemView {
         container.empty();
         const infos = await Twitter.infos('_johackim', this.plugin.twitterClient);
         const root = createRoot(container);
-        const onClick = () => new PublishModal(this.app, this).open();
+        const onClick = () => new PublishModal(this.app, this.plugin).open();
 
         const update = async () => {
             const file = await this.app.workspace.getActiveFile();
