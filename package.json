@@ -11,7 +11,9 @@
         "watch": "rollup -c -w",
         "build": "rollup -c",
         "lint": "eslint",
-        "test": "jest"
+        "test": "jest",
+        "predeploy": "npm run build",
+        "deploy": "CI=true npx semantic-release"
     },
     "jest": {
         "transformIgnorePatterns": []
