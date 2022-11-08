@@ -1,9 +1,16 @@
 import { TwitterApi } from 'twitter-api-v2';
+import { downloadFile } from '../utils';
 
 const createClient = (config) => new TwitterApi(config);
 
-const tweet = async (content, client) => {
-    const { data } = await client.v2.tweet(content);
+const tweet = async (text, client) => {
+    const [image = false] = text.match(/(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/i) || [];
+    const file = image ? await downloadFile(image) : false;
+    const mediaId = image ? await client.v1.uploadMedia(file) : false;
+    const content = text.replace(image, '');
+
+    const { data } = await client.v2.tweet(content, mediaId ? { media: { media_ids: [mediaId] } } : {});
+
     return data?.text;
 };
 
